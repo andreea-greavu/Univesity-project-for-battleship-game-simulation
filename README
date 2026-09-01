@@ -1,63 +1,63 @@
-Nume : Greavu Andreea-Maria
+Name: Greavu Andreea-Maria
 
 ##Battleships
-    Programul simuleaza jocul Battleships, alaturi de niste statistici si criptare de tip Hill Cipher.
-    Pentru implementarea sa, am utilizat mai multe functii:
-    In primul rand, avem functiile allocate si free_mat care aloca dinamic, respectiv elibereaza memoria pentru o matrice. Apoi, se afla functiile ship_number, 
-ship_length si ship_name care returneaza numarul maxim al unui tip de nava, lungimea si numele unei nave. Functia can_place verifica daca o nava poate fi plasata
-pe tabla de joc in functie de coordonatele sale si de orientare, iar ulterior, functia place_ship aseaza o nava pe tabla si salveaza informatiile referente acesteia,
-tipul, coordonatele la care incepe, orientarea, lungimea, daca are celule din componenta sa ramase sau nu. Dupa accea, este functia print_bord care afiseaza tabla
-de joc a fiecarui jucator in parte. Functia attack_process este utilizata pentru a procesa fiecare atac in parte, de la doua coordonate date. Se verifica daca celula
-a mai fost atacata, iar in caz afirmativ inseamna ca lovitura este ratata, alftel o marcam atunci ca fiind atacata. Se verifica daca exista o nava la aceea celula si
-daca nu, inseamna ca lovitura a fost ratata, iar daca nava exista, dar este distrusa, din nou inseamna ca lovitura a fost ratata, iar daca nava exista, atunci se 
-verifica urmatoarele lucruri: daca coordonatele date resprezinta capul navei, atunci lovitura o distruge, altfel, daca coordonatele fac parte din nava, 
-inseamna ca nava a fost lovita, iar daca celulele ramase din nava sunt atacate, acestea se decrementeaza pana ajung la 0, moment in care inseamna ca nava
-este distrusa. Pe tot parcursul functiei, se numara atat loviturile nimerite, cat si cele totale.
-    Urmeaza functiile utilizate pentru statistici si pentru procesarea comenzilor:
-->"match_accuracy" este utilizata pentru calculul acuratetii unui singur meci
-->"total_accuracy" este utilizata pentru a calcula acuratetea totala ponderata a tuturor meciurilor
-->"min_100" determina numarul minim de meciuri care ar trebui sa aiba acuratetea totala de 100% astfel incat este atins targetul de acuratete. Pentru fiecare meci
-se calculeaza impactul, apoi in functie de acest impact, sunt sortate descrescator meciurile. Dupa sortare, se seteaza meciurile la 100% pana in momentul 
-in care se atinge targetul dorit si se returneaza numarul de meciuri modificate.
-->"min_hits" determina numarul minim de lovituri care trebuie reusite astfel incat acuratetea target sa fie atinsa. Se verifica cate lovituri sunt necesare pentru
-acuratetea dorita si se incrementeaza pana ajungem la ea. In final, se returneaza diferenta dintre numarul de lovituri necesare si cele nimerite
-->"max_0" determina numarul maxim de meciuri ce ar putea avea acuratetea 0% astfel incat acuratetea totala sa nu fie mai mica decat targetul dat. Se calculeaza pentru
-fiecare meci impactul pe care il are, iar in functie de acest impact, sunt sortate meciurile in ordine crescatoare. Dupa sortare, se seteaza meciurile la 0% pana in
-momentul in care acuratetea scade sub targetul dorit, deci inseamna ca s a obtinut numarul necesar.
-->"max_hits" determina cate lovituri ar putea fi ratate astfel incat sa fie mentinut targetul de acuratete dorit. Se verifica care e numarul de lovituri minime in asa 
-fel incat sa ramana acuratetea dorita si se verifica cand este atins targetul. La fiecare verificare la care acesta nu este atins, numarul de lovituri va fi incrementat
-urmand ca in final sa se returneze diferenta dintre loviturile nimerite in meci si numarul obtinut in functie.
-->"process_command" proceseaza o comanda primita si calculeaza statisticile corespunzatoare acesteia. Comanda citita este "descompusa" astfel incat sa stim jucatorul despre
-care este vorba, tipul de acuratete(totala sau pe un singur meci), indexul meciului, targetul de acuratete, si daca este vorba de o cerinta ce 
-contine maxim sau minim. Sunt tratate cele 4 cazuri posibile( acuratete totala si minimul de jocuri cu acuratete 100%, acuratete pe un meci si 
-numar minim de lovituri ce nu pot fi ratate, acuratete totala si numar maxim  de meciuri ce ar fi putut avea acuratete 0 si acuratete pe un singur
-joc si numar maxim de lovituri ce ar fi putut fi ratate), iar apoi transmise rezultatul si acuratetea prin parametrii de iesire.
-    Ulterior, se afla functiile utilizate pentru ultimele cerinte, de criptare si decriptare:
-"to_number" converteste un caracter intr un numar conform alfabetului impus, "to_char" converteste un numar intr un caracter, "mod_37" aplica operatia % 37, atat pentru
-numere pozitive, cat si pentru cele negative, "text_transformation" transforma un sir de caractere intr un vector cu numere, "build_key" construieste o matrice "cheie"
-(parcurge cheia citita prin variabila "key" si construieste o matrice cu dimensiunile n x n, unde n reprezinta radical din lungimea cheii, pe ale carei linii si coloane 
-se afla numerele reprezentative pentru fiecare litera), "mat_mod37" inmulteste o matrice cu un vector coloana si aplica fiecarui element mod 37, "multiply" inmulteste 
-fiecare element al unei matrice cu un scalar si ii aplica mod 37, "multiplicative" gaseste inversul multiplicativ al unui numar a in mod 37, adica cauta un i in intervalul 
-[1, 36], cu proprietatea ca a inmultit cu i mod 37 este 1, "det_2" calculeaza determinantul unei matrice 2 x 2,  "adj_2" calculeaza adjuncta unei matrice 2 x 2, 
-"inv_2" calculeaza inversa unei matrice 2 x 2(afla inversul multiplicativ al determinantului, adjuncta iar apoi le  inmulteste), "det_3" calculeaza determinantul unei
-matrice 3 x 3, "adj_3" calculeaza adjuncta unei matrice 3 x 3, "inv_3" calculeaza inversa unei matrice 3 x 3 (afla inversul multiplicativ al determinantului, adjuncta 
-iar apoi le inmulteste).
-   Functia "encrypt" primeste un mesaj pe care il va cripta. Se determina n, care reprezinta radical din lungimea cheii, si se imparte mesajul ce trebuie criptat in mai
-multe bucati de lungime n.Pentru fiecare bucata, transforma caracterele intr un vector numeric, construieste matricea cheie, pe care o inmulteste cu vectorul aflat, 
-aplica mod 37 si converteste rezultatul inapoi in caractere.
-    Functia "decrypt" decripteaza un mesaj primit, adica practic, simuleaza procesul invers al criptarii. Determina n, radical din lungimea cheii si imparte mesajul primit
-in mai multe bucati de lungime n. Pentru fiecare bucata transforma caracterele intr un vector numeric, construieste matricea cheie si ii calculeaza inversa, in functie 
-de dimensiunea sa, apoi inmulteste inversa cu vectorul numeric, iar rezltatul este ulterior transformat inapoi in caractere.
-    Programul principal se afla in main. Acesta incepe prin citirea numarului de jocuri si alocarea dinamica a vectorilor utilizati pentru statistici. Pentru fiecare meci
-in parte se citesc dimensiunile tablei, se calculeaza numarul de nave din fiecare tip si se aloca matrici pentru tabla fiecarui jucator, dar si vectori pentru a retine 
-specificatiile fiecarei nave. Apoi, procesul de plasare al navelor alterneaza intre jucatori si continua pana cand ambii isi plaseaza toate navele. Imediat dupa, sunt 
-afisate tablele pentru fiecare jucator in parte. Urmatoarea bucata din program este utilizata pentru procesarea atacurilor. Aceste atacuri alterneaza si ele intre jucatori
-si se opresc in momentul in care un jucator a ramas fara nici o nava, moment in care este clar ca celalalt a castigat. Ultima parte este  destinata statisticilor si a 
-criptarii/ decrpitarii. Se citeste cheia si in functie de aceasat exista doua cazuri:
--primul caz, daca cheia este "-", inseamna ca nu sunt criptate comenzile
--al doilea caz, cheia este criptata
-    Pentru ambele cazuri, se citesc comenziile pana la intalnirea lui Q. Fiecare comanda este procesata de functia "process_command" si apoi
-sunt afisate rezultatele, fie normale,  fie criptate.
-    In cazul comenzilor criptate, acestea sunt decriptate prin apelul functiei "decrypt", iar la final prin apelul functiei "encrypt"
-vor fi criptate.
-    Pentru compilare si curatare am utilizat build si clean.
+    The program simulates the game of Battleships, along with some statistics and Hill Cipher encryption.
+    For its implementation, I used several functions:
+    First, there are the functions allocate and free_mat, which dynamically allocate and free memory for a matrix, respectively. Then there are the functions ship_number,
+ship_length and ship_name, which return the maximum number of a ship type, the length, and the name of a ship. The can_place function checks whether a ship can be placed
+on the game board based on its coordinates and orientation, and afterward, the place_ship function places a ship on the board and saves its information —
+type, starting coordinates, orientation, length, and whether it still has remaining cells. After that comes the print_bord function, which prints
+each player's game board. The attack_process function is used to process each attack given by two coordinates. It checks whether the cell
+has already been attacked, and if so it means the shot is a miss, otherwise the cell is marked as attacked. It checks whether a ship exists at that cell, and
+if not, it means the shot was a miss, and if the ship exists but is already destroyed, again it means the shot was a miss; and if the ship exists, then it
+checks the following: if the given coordinates represent the ship's head, then the shot destroys it, otherwise, if the coordinates are part of the ship,
+it means the ship was hit, and if the ship's remaining cells are attacked, they are decremented until they reach 0, at which point it means the ship
+is destroyed. Throughout the function, both the successful hits and the total shots are counted.
+    Next come the functions used for statistics and for processing commands:
+->"match_accuracy" is used to compute the accuracy of a single match
+->"total_accuracy" is used to compute the total weighted accuracy across all matches
+->"min_100" determines the minimum number of matches that would need to have 100% total accuracy so that the accuracy target is reached. For each match
+the impact is computed, then based on this impact, the matches are sorted in descending order. After sorting, matches are set to 100% until the
+target is reached, and the number of modified matches is returned.
+->"min_hits" determines the minimum number of successful hits needed so that the target accuracy is reached. It checks how many hits are needed for
+the desired accuracy and increments until it is reached. In the end, it returns the difference between the number of hits needed and the ones actually landed
+->"max_0" determines the maximum number of matches that could have 0% accuracy such that the total accuracy doesn't drop below the given target. For
+each match the impact it has is computed, and based on this impact, the matches are sorted in ascending order. After sorting, matches are set to 0% until
+the accuracy drops below the desired target, meaning the needed number has been obtained.
+->"max_hits" determines how many hits could be missed while still keeping the desired accuracy target. It checks the minimum number of hits needed so
+that the desired accuracy remains, checking when the target is reached. Each time it isn't reached, the number of hits is incremented,
+and in the end the difference between the hits landed in the match and the number obtained by the function is returned.
+->"process_command" processes a received command and computes the statistics corresponding to it. The command read is "broken down" so we know which player
+it's about, the type of accuracy (total or for a single match), the match index, the accuracy target, and whether it's a requirement involving
+a maximum or a minimum. The 4 possible cases are handled (total accuracy and the minimum number of matches with 100% accuracy, accuracy for one match and
+the minimum number of hits that can't be missed, total accuracy and the maximum number of matches that could have had 0% accuracy, and accuracy for a single
+match and the maximum number of hits that could have been missed), and then the result and the accuracy are passed back through the output parameters.
+    Next come the functions used for the final requirements, encryption and decryption:
+"to_number" converts a character to a number according to the given alphabet, "to_char" converts a number to a character, "mod_37" applies the % 37 operation, both for
+positive and negative numbers, "text_transformation" turns a string of characters into a vector of numbers, "build_key" builds a "key" matrix
+(it goes through the key read via the "key" variable and builds an n x n matrix, where n is the square root of the key's length, whose rows and columns
+hold the numbers representing each letter), "mat_mod37" multiplies a matrix by a column vector and applies mod 37 to each element, "multiply" multiplies
+each element of a matrix by a scalar and applies mod 37 to it, "multiplicative" finds the multiplicative inverse of a number a mod 37, i.e. it looks for an i in the range
+[1, 36] such that a multiplied by i mod 37 equals 1, "det_2" computes the determinant of a 2x2 matrix, "adj_2" computes the adjugate of a 2x2 matrix,
+"inv_2" computes the inverse of a 2x2 matrix (finds the multiplicative inverse of the determinant, the adjugate, and then multiplies them), "det_3" computes the determinant of a
+3x3 matrix, "adj_3" computes the adjugate of a 3x3 matrix, "inv_3" computes the inverse of a 3x3 matrix (finds the multiplicative inverse of the determinant, the adjugate,
+and then multiplies them).
+    The "encrypt" function receives a message that it will encrypt. It determines n, the square root of the key's length, and splits the message to be encrypted into several
+chunks of length n. For each chunk, it turns the characters into a numeric vector, builds the key matrix, multiplies it by that vector,
+applies mod 37, and converts the result back into characters.
+    The "decrypt" function decrypts a received message, i.e. it essentially simulates the reverse process of encryption. It determines n, the square root of the key's length, and splits the received message
+into several chunks of length n. For each chunk it turns the characters into a numeric vector, builds the key matrix and computes its inverse, depending
+on its size, then multiplies the inverse by the numeric vector, and the result is afterward converted back into characters.
+    The main program is in main. It starts by reading the number of games and dynamically allocating the vectors used for statistics. For each match
+the board dimensions are read, the number of ships of each type is computed, and matrices are allocated for each player's board, as well as vectors to store
+the specifications of each ship. Then, the ship-placement process alternates between players and continues until both have placed all their ships. Right after, the
+boards are printed for each player. The next part of the program is used for processing attacks. These attacks also alternate between players
+and stop once a player has no ships left, at which point it is clear the other player has won. The last part is dedicated to statistics and
+encryption/decryption. The key is read, and depending on it there are two cases:
+-first case, if the key is "-", it means the commands are not encrypted
+-second case, the key is encrypted
+    In both cases, commands are read until Q is encountered. Each command is processed by the "process_command" function and then
+the results are printed, either plain or encrypted.
+    In the case of encrypted commands, they are decrypted by calling the "decrypt" function, and at the end they are encrypted by calling the "encrypt"
+function.
+    For compiling and cleaning I used build and clean.
