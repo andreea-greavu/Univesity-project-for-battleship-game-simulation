@@ -1,0 +1,63 @@
+Nume : Greavu Andreea-Maria
+
+##Battleships
+    Programul simuleaza jocul Battleships, alaturi de niste statistici si criptare de tip Hill Cipher.
+    Pentru implementarea sa, am utilizat mai multe functii:
+    In primul rand, avem functiile allocate si free_mat care aloca dinamic, respectiv elibereaza memoria pentru o matrice. Apoi, se afla functiile ship_number, 
+ship_length si ship_name care returneaza numarul maxim al unui tip de nava, lungimea si numele unei nave. Functia can_place verifica daca o nava poate fi plasata
+pe tabla de joc in functie de coordonatele sale si de orientare, iar ulterior, functia place_ship aseaza o nava pe tabla si salveaza informatiile referente acesteia,
+tipul, coordonatele la care incepe, orientarea, lungimea, daca are celule din componenta sa ramase sau nu. Dupa accea, este functia print_bord care afiseaza tabla
+de joc a fiecarui jucator in parte. Functia attack_process este utilizata pentru a procesa fiecare atac in parte, de la doua coordonate date. Se verifica daca celula
+a mai fost atacata, iar in caz afirmativ inseamna ca lovitura este ratata, alftel o marcam atunci ca fiind atacata. Se verifica daca exista o nava la aceea celula si
+daca nu, inseamna ca lovitura a fost ratata, iar daca nava exista, dar este distrusa, din nou inseamna ca lovitura a fost ratata, iar daca nava exista, atunci se 
+verifica urmatoarele lucruri: daca coordonatele date resprezinta capul navei, atunci lovitura o distruge, altfel, daca coordonatele fac parte din nava, 
+inseamna ca nava a fost lovita, iar daca celulele ramase din nava sunt atacate, acestea se decrementeaza pana ajung la 0, moment in care inseamna ca nava
+este distrusa. Pe tot parcursul functiei, se numara atat loviturile nimerite, cat si cele totale.
+    Urmeaza functiile utilizate pentru statistici si pentru procesarea comenzilor:
+->"match_accuracy" este utilizata pentru calculul acuratetii unui singur meci
+->"total_accuracy" este utilizata pentru a calcula acuratetea totala ponderata a tuturor meciurilor
+->"min_100" determina numarul minim de meciuri care ar trebui sa aiba acuratetea totala de 100% astfel incat este atins targetul de acuratete. Pentru fiecare meci
+se calculeaza impactul, apoi in functie de acest impact, sunt sortate descrescator meciurile. Dupa sortare, se seteaza meciurile la 100% pana in momentul 
+in care se atinge targetul dorit si se returneaza numarul de meciuri modificate.
+->"min_hits" determina numarul minim de lovituri care trebuie reusite astfel incat acuratetea target sa fie atinsa. Se verifica cate lovituri sunt necesare pentru
+acuratetea dorita si se incrementeaza pana ajungem la ea. In final, se returneaza diferenta dintre numarul de lovituri necesare si cele nimerite
+->"max_0" determina numarul maxim de meciuri ce ar putea avea acuratetea 0% astfel incat acuratetea totala sa nu fie mai mica decat targetul dat. Se calculeaza pentru
+fiecare meci impactul pe care il are, iar in functie de acest impact, sunt sortate meciurile in ordine crescatoare. Dupa sortare, se seteaza meciurile la 0% pana in
+momentul in care acuratetea scade sub targetul dorit, deci inseamna ca s a obtinut numarul necesar.
+->"max_hits" determina cate lovituri ar putea fi ratate astfel incat sa fie mentinut targetul de acuratete dorit. Se verifica care e numarul de lovituri minime in asa 
+fel incat sa ramana acuratetea dorita si se verifica cand este atins targetul. La fiecare verificare la care acesta nu este atins, numarul de lovituri va fi incrementat
+urmand ca in final sa se returneze diferenta dintre loviturile nimerite in meci si numarul obtinut in functie.
+->"process_command" proceseaza o comanda primita si calculeaza statisticile corespunzatoare acesteia. Comanda citita este "descompusa" astfel incat sa stim jucatorul despre
+care este vorba, tipul de acuratete(totala sau pe un singur meci), indexul meciului, targetul de acuratete, si daca este vorba de o cerinta ce 
+contine maxim sau minim. Sunt tratate cele 4 cazuri posibile( acuratete totala si minimul de jocuri cu acuratete 100%, acuratete pe un meci si 
+numar minim de lovituri ce nu pot fi ratate, acuratete totala si numar maxim  de meciuri ce ar fi putut avea acuratete 0 si acuratete pe un singur
+joc si numar maxim de lovituri ce ar fi putut fi ratate), iar apoi transmise rezultatul si acuratetea prin parametrii de iesire.
+    Ulterior, se afla functiile utilizate pentru ultimele cerinte, de criptare si decriptare:
+"to_number" converteste un caracter intr un numar conform alfabetului impus, "to_char" converteste un numar intr un caracter, "mod_37" aplica operatia % 37, atat pentru
+numere pozitive, cat si pentru cele negative, "text_transformation" transforma un sir de caractere intr un vector cu numere, "build_key" construieste o matrice "cheie"
+(parcurge cheia citita prin variabila "key" si construieste o matrice cu dimensiunile n x n, unde n reprezinta radical din lungimea cheii, pe ale carei linii si coloane 
+se afla numerele reprezentative pentru fiecare litera), "mat_mod37" inmulteste o matrice cu un vector coloana si aplica fiecarui element mod 37, "multiply" inmulteste 
+fiecare element al unei matrice cu un scalar si ii aplica mod 37, "multiplicative" gaseste inversul multiplicativ al unui numar a in mod 37, adica cauta un i in intervalul 
+[1, 36], cu proprietatea ca a inmultit cu i mod 37 este 1, "det_2" calculeaza determinantul unei matrice 2 x 2,  "adj_2" calculeaza adjuncta unei matrice 2 x 2, 
+"inv_2" calculeaza inversa unei matrice 2 x 2(afla inversul multiplicativ al determinantului, adjuncta iar apoi le  inmulteste), "det_3" calculeaza determinantul unei
+matrice 3 x 3, "adj_3" calculeaza adjuncta unei matrice 3 x 3, "inv_3" calculeaza inversa unei matrice 3 x 3 (afla inversul multiplicativ al determinantului, adjuncta 
+iar apoi le inmulteste).
+   Functia "encrypt" primeste un mesaj pe care il va cripta. Se determina n, care reprezinta radical din lungimea cheii, si se imparte mesajul ce trebuie criptat in mai
+multe bucati de lungime n.Pentru fiecare bucata, transforma caracterele intr un vector numeric, construieste matricea cheie, pe care o inmulteste cu vectorul aflat, 
+aplica mod 37 si converteste rezultatul inapoi in caractere.
+    Functia "decrypt" decripteaza un mesaj primit, adica practic, simuleaza procesul invers al criptarii. Determina n, radical din lungimea cheii si imparte mesajul primit
+in mai multe bucati de lungime n. Pentru fiecare bucata transforma caracterele intr un vector numeric, construieste matricea cheie si ii calculeaza inversa, in functie 
+de dimensiunea sa, apoi inmulteste inversa cu vectorul numeric, iar rezltatul este ulterior transformat inapoi in caractere.
+    Programul principal se afla in main. Acesta incepe prin citirea numarului de jocuri si alocarea dinamica a vectorilor utilizati pentru statistici. Pentru fiecare meci
+in parte se citesc dimensiunile tablei, se calculeaza numarul de nave din fiecare tip si se aloca matrici pentru tabla fiecarui jucator, dar si vectori pentru a retine 
+specificatiile fiecarei nave. Apoi, procesul de plasare al navelor alterneaza intre jucatori si continua pana cand ambii isi plaseaza toate navele. Imediat dupa, sunt 
+afisate tablele pentru fiecare jucator in parte. Urmatoarea bucata din program este utilizata pentru procesarea atacurilor. Aceste atacuri alterneaza si ele intre jucatori
+si se opresc in momentul in care un jucator a ramas fara nici o nava, moment in care este clar ca celalalt a castigat. Ultima parte este  destinata statisticilor si a 
+criptarii/ decrpitarii. Se citeste cheia si in functie de aceasat exista doua cazuri:
+-primul caz, daca cheia este "-", inseamna ca nu sunt criptate comenzile
+-al doilea caz, cheia este criptata
+    Pentru ambele cazuri, se citesc comenziile pana la intalnirea lui Q. Fiecare comanda este procesata de functia "process_command" si apoi
+sunt afisate rezultatele, fie normale,  fie criptate.
+    In cazul comenzilor criptate, acestea sunt decriptate prin apelul functiei "decrypt", iar la final prin apelul functiei "encrypt"
+vor fi criptate.
+    Pentru compilare si curatare am utilizat build si clean.
