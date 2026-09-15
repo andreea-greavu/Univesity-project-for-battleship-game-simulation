@@ -1,19 +1,17 @@
-Name: Greavu Andreea-Maria
 
-##Battleships
     The program simulates the game of Battleships, along with some statistics and Hill Cipher encryption.
-    For its implementation, I used several functions:
-    First, there are the functions allocate and free_mat, which dynamically allocate and free memory for a matrix, respectively. Then there are the functions ship_number,
-ship_length and ship_name, which return the maximum number of a ship type, the length, and the name of a ship. The can_place function checks whether a ship can be placed
-on the game board based on its coordinates and orientation, and afterward, the place_ship function places a ship on the board and saves its information —
-type, starting coordinates, orientation, length, and whether it still has remaining cells. After that comes the print_bord function, which prints
-each player's game board. The attack_process function is used to process each attack given by two coordinates. It checks whether the cell
+For its implementation, I used several functions:
+    First, there are the functions "allocate" and "free_mat", which dynamically allocate and free memory for a matrix. Then there are the functions "ship_number",
+"ship_length" and "ship_name", which return the maximum number of a ship type, the length, and the name of a ship. The "can_place" function checks whether a ship can be placed
+on the game board based on its coordinates and orientation, and afterward, the "place_ship" function places a ship on the board and saves its information —
+type, starting coordinates, orientation, length, and whether it still has remaining cells. After that comes the "print_bord" function, which prints
+each player's game board. The "attack_process" function is used to process each attack given by two coordinates. It checks whether the cell
 has already been attacked, and if so it means the shot is a miss, otherwise the cell is marked as attacked. It checks whether a ship exists at that cell, and
 if not, it means the shot was a miss, and if the ship exists but is already destroyed, again it means the shot was a miss; and if the ship exists, then it
 checks the following: if the given coordinates represent the ship's head, then the shot destroys it, otherwise, if the coordinates are part of the ship,
 it means the ship was hit, and if the ship's remaining cells are attacked, they are decremented until they reach 0, at which point it means the ship
 is destroyed. Throughout the function, both the successful hits and the total shots are counted.
-    Next come the functions used for statistics and for processing commands:
+    Next, the functions used for statistics and for processing commands:
 ->"match_accuracy" is used to compute the accuracy of a single match
 ->"total_accuracy" is used to compute the total weighted accuracy across all matches
 ->"min_100" determines the minimum number of matches that would need to have 100% total accuracy so that the accuracy target is reached. For each match
@@ -32,7 +30,7 @@ it's about, the type of accuracy (total or for a single match), the match index,
 a maximum or a minimum. The 4 possible cases are handled (total accuracy and the minimum number of matches with 100% accuracy, accuracy for one match and
 the minimum number of hits that can't be missed, total accuracy and the maximum number of matches that could have had 0% accuracy, and accuracy for a single
 match and the maximum number of hits that could have been missed), and then the result and the accuracy are passed back through the output parameters.
-    Next come the functions used for the final requirements, encryption and decryption:
+    The functions used for the final requirements, encryption and decryption:
 "to_number" converts a character to a number according to the given alphabet, "to_char" converts a number to a character, "mod_37" applies the % 37 operation, both for
 positive and negative numbers, "text_transformation" turns a string of characters into a vector of numbers, "build_key" builds a "key" matrix
 (it goes through the key read via the "key" variable and builds an n x n matrix, where n is the square root of the key's length, whose rows and columns
@@ -48,16 +46,14 @@ applies mod 37, and converts the result back into characters.
     The "decrypt" function decrypts a received message, i.e. it essentially simulates the reverse process of encryption. It determines n, the square root of the key's length, and splits the received message
 into several chunks of length n. For each chunk it turns the characters into a numeric vector, builds the key matrix and computes its inverse, depending
 on its size, then multiplies the inverse by the numeric vector, and the result is afterward converted back into characters.
-    The main program is in main. It starts by reading the number of games and dynamically allocating the vectors used for statistics. For each match
-the board dimensions are read, the number of ships of each type is computed, and matrices are allocated for each player's board, as well as vectors to store
-the specifications of each ship. Then, the ship-placement process alternates between players and continues until both have placed all their ships. Right after, the
-boards are printed for each player. The next part of the program is used for processing attacks. These attacks also alternate between players
-and stop once a player has no ships left, at which point it is clear the other player has won. The last part is dedicated to statistics and
-encryption/decryption. The key is read, and depending on it there are two cases:
+    The main starts by reading the number of games and dynamically allocating the vectors used for statistics. For each match the board dimensions are read, the number
+of ships of each type is computed, and matrices are allocated for each player's board, as well as vectors to store the specifications of each ship. Then, the ship-placement
+process alternates between players and continues until both have placed all their ships. Right after, the boards are printed for each player. The next part of the 
+program is used for processing attacks. These attacks also alternate between players and stop once a player has no ships left, at which point it is clear the other 
+player has won. The last part is dedicated to statistics and encryption/decryption. The key is read, and depending on it there are two cases:
 -first case, if the key is "-", it means the commands are not encrypted
 -second case, the key is encrypted
     In both cases, commands are read until Q is encountered. Each command is processed by the "process_command" function and then
 the results are printed, either plain or encrypted.
     In the case of encrypted commands, they are decrypted by calling the "decrypt" function, and at the end they are encrypted by calling the "encrypt"
 function.
-    For compiling and cleaning I used build and clean.
